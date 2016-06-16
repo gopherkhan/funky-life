@@ -1,0 +1,72 @@
+<html>
+	<head>
+		<title>Game of Life</title>
+		<script type="text/javascript" src="js/gol.js"></script>
+		<style type="text/css">
+			.cell {
+				width: 50px;
+				height: 50px;
+				display: inline-block;
+				border-radius: 6px;
+
+				border: 2px solid darkgrey;
+				background-color: lightblue;
+				/*
+				transition: opacity .15s ease-in-out;
+				-moz-transition: opacity .15s ease-in-out;
+    			-webkit-transition: opacity .15s ease-in-out;
+    			*/
+				opacity: 0.0;
+			}
+
+			.body {
+				background-color: lightgrey;
+				vertical-align: top;
+			}
+
+			.board {
+				display: inline-block;
+			}
+
+			.controls {
+				display: inline-block;
+			}
+
+			.cell.alive {
+				opacity: 1;
+			}
+
+			.btn {
+				padding: 3px 5px;
+				border: 1px solid darkslategray;
+				color: darkslategray;
+				margin: 2px;
+				cursor: pointer;
+			}
+
+			.btn:hover {
+				background-color: salmon;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="board"></div>
+		<a class='btn add-blinker'>Add Blinker</a>
+		<a class='btn add-glider'>Add Glider</a>
+		<a class='btn add-flower'>Add Flower</a>
+		<a class="btn rotate">Rotate Board</a>
+		<a class="btn" href="https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life" target="_blank">More Info</a>
+		<script type="text/javascript">
+			var game = new GameOfLife();
+			game.init('board');
+			document.querySelector('.add-blinker').addEventListener('click', game.addBlinker);
+			document.querySelector('.add-glider').addEventListener('click', game.addGlider);
+			document.querySelector('.add-flower').addEventListener('click', game.addFlower);
+			document.querySelector('.rotate').addEventListener('click', game.rotateBoard);
+			game.animateForever();
+
+			// game definition will be hoisted.
+			
+		</script>
+	</body>
+</html>
