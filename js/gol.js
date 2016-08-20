@@ -3,6 +3,7 @@ window.GameOfLife = (function GameOfLife() {
 	var xsize = 16;
 	var ysize = 16;
 	var boardRender;
+	var boardGrid;
 
 	var DEAD = 0;
 	var ALIVE = 1;
@@ -38,6 +39,30 @@ window.GameOfLife = (function GameOfLife() {
 			}
 		}
 		return n;
+	}
+
+	function makeBoardNode(isAlive) {
+		var node = document.createElement('div')
+		node.classList.add('cell');
+		if (isAlive) {
+			node.classList.add('alive');
+		}
+		node.appendChild(document.createElement('div'));
+		return node;
+	}
+
+	function renderInitialBoard() {
+		var frag = document.createDocumentFragment();
+		var aNode;
+		for (var y = 0; y < ysize; ++y) {
+			for (var x = 0; x < xsize; ++x) {
+				aNode = makeBoardNode(boardGrid[x][y] === ALIVE);
+				boardGrid[x][y] = aNode;
+				frag.appendChild(aNode);
+			}
+			frag.appendChild(document.createElement('br'));
+		}
+		boardRender.appendChild(frag);
 	}
 
 	function isValidCoord(x, y) {
@@ -87,15 +112,28 @@ window.GameOfLife = (function GameOfLife() {
 	var DEAD_TEMPLATE = "<div class='cell'></div>";
 
 	function drawLifeGrid() {
-		var text = "";
+		window.console.log("@@@ drawing our life grid");
+		//var text = "";
 		for (var y = 0; y < ysize; ++y) {
 			for (var x = 0; x < xsize; ++x) {
-				text += (lifeGrid[x][y] == ALIVE ? LIVE_TEMPLATE : DEAD_TEMPLATE);
+				debugger;
+				toggleNode(boardGrid[x][y], lifeGrid[x][y] == ALIVE);
+				//text += (lifeGrid[x][y] == ALIVE ? LIVE_TEMPLATE : DEAD_TEMPLATE);
 			}
-			text += "<br/>";
+			//text += "<br/>";
 		}
 
-		boardRender.innerHTML = text;
+		//boardRender.innerHTML = text;
+	}
+
+	function toggleNode(node, isAlive) {
+		//if (!node) { return; } 
+		var ALIVE_CLASS = 'alive';
+		if (isAlive && !node.classList.contains(ALIVE_CLASS)) {
+			node.classList.add(ALIVE_CLASS);
+		} else if (!isAlive && node.classList.contains(ALIVE_CLASS)) {
+			node.classList.remove(ALIVE_CLASS);
+		}
 	}
 
 	function init(boardId) {
@@ -105,9 +143,11 @@ window.GameOfLife = (function GameOfLife() {
 	    var lifeGridSetup = BOARD_TYPE.FLOWER;
 	    
 		lifeGrid = new Array(xsize);
+		boardGrid = new Array(xsize);
 		for (var x = 0; x < xsize; ++x) {
 			lifeGrid[x] = new Array(ysize);
-			for(var y = 0; y < ysize; ++y) {
+			boardGrid[x] = new Array(ysize);
+			for (var y = 0; y < ysize; ++y) {
 				lifeGrid[x][y] = DEAD;
 			}
 		}
@@ -120,8 +160,7 @@ window.GameOfLife = (function GameOfLife() {
 	    } else if(lifeGridSetup == BOARD_TYPE.FLOWER) {
 	        addFlower();
 	    }
-	    
-		drawLifeGrid();
+	    renderInitialBoard();
 	}
 
 
@@ -167,7 +206,7 @@ window.GameOfLife = (function GameOfLife() {
 
 	function animateForever() {
 		renderNext();
-		window.setTimeout(animateForever, 200);
+		window.setTimeout(animateForever, 750);
 	}
 
 

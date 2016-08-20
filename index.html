@@ -7,15 +7,26 @@
 				width: 50px;
 				height: 50px;
 				display: inline-block;
-				border-radius: 6px;
+				vertical-align: middle;
+				text-align: center;
+			}
 
+			.cell div {
+				border-radius: 6px;
+				width: 90%;
+				height: 90%;
+				display: block;
+				vertical-align: middle;
 				border: 2px solid darkgrey;
 				background-color: lightblue;
-				/*
-				transition: opacity .15s ease-in-out;
-				-moz-transition: opacity .15s ease-in-out;
-    			-webkit-transition: opacity .15s ease-in-out;
-    			*/
+				margin: auto;
+				tranform: scale(0);
+				-webkit-transform: scale(0);
+				
+				transition: all 0.75s ease;
+				-moz-transition: all 0.75s ease;
+    			-webkit-transition: all 0.75s ease;
+    			transition-duration: 0.75s;
 				opacity: 0.0;
 			}
 
@@ -32,8 +43,10 @@
 				display: inline-block;
 			}
 
-			.cell.alive {
+			.cell.alive div {
 				opacity: 1;
+				transform: scale(1);
+				-webkit-transform: scale(1);
 			}
 
 			.btn {
